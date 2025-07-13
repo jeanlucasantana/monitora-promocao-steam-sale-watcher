@@ -1,0 +1,29 @@
+name: Steam Sale Watcher
+
+on:
+  schedule:
+    - cron: '0 12 * * *'  # 12h UTC = 9h BRT
+  workflow_dispatch:       # permite rodar manualmente também
+
+jobs:
+  run-watcher:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Instalar dependências
+        run: npm install
+
+      - name: Executar verificação da Steam
+        run: node index.js
+        env:
+          STEAM_ID: ${{ secrets.STEAM_ID }}
+          STEAM_API_KEY: ${{ secrets.STEAM_API_KEY }}
+          MY_NUMBER: ${{ secrets.MY_NUMBER }}

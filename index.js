@@ -1,25 +1,22 @@
-require('dotenv').config();
-const { startWhatsApp, sendMessage } = require('./whatsapp');
+// index.js
 const { getDiscountedGames } = require('./steam');
+const { startWhatsApp, sendMessage } = require('./whatsapp');
+require('dotenv').config();
 
-//inicializa o bot e checa as promocoes, encaminhando a resposta para o whatsapp desejado
+// inicia o bot, verifica se ha promocao na wishlist e encaminha notificacao sobre a analise
 (async () => {
-  try {
-    const sock = await startWhatsApp();
+  console.log('⏰ Verificando promoções da Steam...');
+  const sock = await startWhatsApp();
+  const games = await getDiscountedGames();
 
-    console.log('📤 Buscando promoções na Steam...');
-    const games = await getDiscountedGames();
-
-    if (games.length === 0) {
-      await sendMessage(sock, process.env.MY_NUMBER, 'Nenhum jogo da sua wishlist está em promoção no momento 😕');
-    } else {
-      const message = games.map(game =>
-        `🎮 ${game.title}\n🔻 ${game.discount} — De ${game.original} por ${game.price}`
-      ).join('\n\n');
-
-      await sendMessage(sock, process.env.MY_NUMBER, `🔥 Jogos em promoção na sua wishlist:\n\n${message}`);
+  if (games.length > 0) {
+    for (const game of games) {
+      await sock.sendMessage(process.env.MY_NUMBER, {
+        image: { url: game.image },
+        caption: `🎮 *${game.title}*\n🔻 ${game.discount} — De ${game.original} por ${game.price}\n🔗 ${game.url}`
+      });
     }
-  } catch (error) {
-    console.error('Erro inesperado:', error);
+  } else {
+    await sendMessage(sock, process.env.MY_NUMBER, 'Nenhum jogo da sua wishlist está em promoção hoje 😕');
   }
 })();
