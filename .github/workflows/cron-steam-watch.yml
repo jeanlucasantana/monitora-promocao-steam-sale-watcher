@@ -27,3 +27,4 @@ jobs:
           STEAM_ID: ${{ secrets.STEAM_ID }}
           STEAM_API_KEY: ${{ secrets.STEAM_API_KEY }}
           MY_NUMBER: ${{ secrets.MY_NUMBER }}
+          WA_AUTH_STATE: ${{ secrets.WA_AUTH_STATE }} 
