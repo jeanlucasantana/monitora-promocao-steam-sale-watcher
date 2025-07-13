@@ -3,14 +3,14 @@ name: Steam Sale Watcher
 on:
   schedule:
     - cron: '0 12 * * *'  # 12h UTC = 9h BRT
-  workflow_dispatch:       # permite rodar manualmente também
+  workflow_dispatch:
 
 jobs:
   run-watcher:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout do código
+      - name: Checkout do código (com auth_info_multi)
         uses: actions/checkout@v3
 
       - name: Setup Node.js
@@ -27,4 +27,3 @@ jobs:
           STEAM_ID: ${{ secrets.STEAM_ID }}
           STEAM_API_KEY: ${{ secrets.STEAM_API_KEY }}
           MY_NUMBER: ${{ secrets.MY_NUMBER }}
-          WA_AUTH_STATE: ${{ secrets.WA_AUTH_STATE }} 
