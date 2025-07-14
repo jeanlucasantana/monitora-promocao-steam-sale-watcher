@@ -9,7 +9,7 @@ require('dotenv').config();
   const sock = await startWhatsApp();
 
   //roda todos os dias as 9 da manha
-  cron.schedule('0 12 * * *', async () => {
+  cron.schedule('0 10 * * *', async () => {
     console.log('⏰ Verificando promoções da Steam...');
     const games = await getDiscountedGames();
 
