@@ -1,5 +1,5 @@
 //cron.js
-/*const cron = require('node-cron');
+const cron = require('node-cron');
 const { getDiscountedGames } = require('./steam');
 const { startWhatsApp, sendMessage } = require('./whatsapp');
 require('dotenv').config();
@@ -24,4 +24,4 @@ require('dotenv').config();
       await sendMessage(sock, process.env.MY_NUMBER, 'Nenhum jogo da sua wishlist está em promoção hoje 😕');
     }
   });
-})();*/
+})();
