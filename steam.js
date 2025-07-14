@@ -8,7 +8,6 @@ const API_KEY = process.env.STEAM_API_KEY; //api key
 async function getWishlistAppIds(steamId) {
   try {
     const url = `https://api.steampowered.com/IWishlistService/GetWishlist/v1/?steamid=${steamId}&key=${API_KEY}`; 
-    // alternativa: https://steamwebapi.azurewebsites.net/ (que você já testou e funcionou)
     const res = await axios.get(url);
     const items = res.data?.response?.items || [];
     return items.map(item => item.appid);
